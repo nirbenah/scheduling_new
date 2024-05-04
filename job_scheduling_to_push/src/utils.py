@@ -6,19 +6,20 @@ from typing import Dict, Set, List, Tuple
 import copy
 import numpy
 
-#transpose:
+
+# transpose:
 def transpose(list_of_lists : List[List[int]]):
     new_list_of_lists = list_of_lists
     return np.array(new_list_of_lists).T.tolist()
 
 
-#sort the dict by the key as a number, except the first letter:
+# sort the dict by the key as a number, except the first letter:
 def sort_dict_by_keys(dictionary):
     sorted_dict = dict(sorted(dictionary.items(), key=lambda x: int(x[0][1:])))
     return sorted_dict
 
 
-#from dict(j,m) to dict(m,{jobs}):
+# from dict(j,m) to dict(m,{jobs}):
 def dict_reverse(j_m_dict: Dict[str, str]) -> Dict[str, Set[str]]:
     reversed_dict = defaultdict(set)
     for key, value in j_m_dict.items():
@@ -27,7 +28,7 @@ def dict_reverse(j_m_dict: Dict[str, str]) -> Dict[str, Set[str]]:
     return dict(reversed_dict)
 
 
-#from dict(m,{jobs}) to dict( m , ({jobs}, time) ):
+# from dict(m,{jobs}) to dict( m , ({jobs}, time) ):
 def add_times_to_m_j(m_j: Dict[str, Set[str]], p_vals: List[List[int]]) -> Dict[str, Tuple[Set[str], int]]:
     dict_with_times: Dict[str, Tuple[Set[str], int]] = {}
     for m, set_of_j in m_j.items():
@@ -35,13 +36,14 @@ def add_times_to_m_j(m_j: Dict[str, Set[str]], p_vals: List[List[int]]) -> Dict[
         dict_with_times[m] = (set_of_j, set_sum)
     return dict_with_times
 
-#from dict(j,m) to dict( m , ({jobs}, time) ):
+
+# from dict(j,m) to dict( m , ({jobs}, time) ):
 def sol_by_machine_with_times(j_m_dict: Dict[str, str], p_vals: List[List[int]]) -> Dict[str, Tuple[Set[str], int]]:
     sol_by_machine = dict_reverse(j_m_dict)
     return add_times_to_m_j(sol_by_machine, p_vals)
 
 
-#from dict( m , ({jobs}, time) ) to dict(m, time)
+# from dict( m , ({jobs}, time) ) to dict(m, time)
 def machine_with_times(sol_machine_times : Dict[str, Tuple[Set[str], int]]) -> Dict[str,  int]:
     just_machine_times = dict()
     for k, v in sol_machine_times.items():
@@ -49,22 +51,23 @@ def machine_with_times(sol_machine_times : Dict[str, Tuple[Set[str], int]]) -> D
         just_machine_times[k] = v[1]
     return just_machine_times
 
-#the run time of all machines together:
+
+# the run time of all machines together:
 def print_run_time_of_machines(_dict: Dict[str,  int]):
     max_val = max(_dict.values())
     print(f'\nThe run took: {max_val:.3f}')
 
-#nice way to print dict:
+
+# nice way to print dict:
 def print_dict(d : dict):
     for key in d:
         print(key, ' : ', d[key])
-        print("\n")
+        # print("\n")
     print("\n\n")
-        
-        
-        
+
+
 def read_file_to_list_of_lists(file_path: str) -> List[List[str]]:
-    #every line is a job with machine times, P transose
+    # every line is a job with machine times, P transose
     result = []
     with open(file_path, 'r') as file:
         for line in file:
@@ -72,6 +75,7 @@ def read_file_to_list_of_lists(file_path: str) -> List[List[str]]:
             result.append(words)
     result = [[int(num) for num in sublist] for sublist in result]
     return result
+
 
 def read_file_to_dict(filename):
     result_dict = {}

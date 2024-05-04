@@ -2,10 +2,10 @@ from lin_prog_solver import *
 from obvious_solver import *
 from real_exact import *
 
-# #tests:
-rows = 10  # Number of rows in the list
-cols = 50  # Number of columns in the list
-matrix = numpy.random.uniform(1, 100, (rows, cols))
+#tests:
+rows = 20  # Number of rows in the list
+cols = 100  # Number of columns in the list
+matrix = numpy.random.randint(1, 100, (rows, cols))
 matrix_not_numpy = matrix.tolist()
 # print(natrix_not_numpy)
 approx = ApproxSolver(matrix_not_numpy)

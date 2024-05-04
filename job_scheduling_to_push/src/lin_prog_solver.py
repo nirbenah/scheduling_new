@@ -1,12 +1,13 @@
 from utils import *
+import sys
 
 
-#The pre-alg' phase:
+# The pre-alg' phase:
 def greedy_alg(p_vals: List[List[int]]):
     #gets transposed mat JxM
     machines = [0] * len(p_vals[0]) 
     for item in p_vals: # a line - machine
-        machines[item.index(min(item))] += min(item) 
+        machines[item.index(min(item))] += min(item)
     return (max(machines) / len(p_vals[0]), max(machines)) #(alpah/M, alpha)
 # print(greedy_alg([[4, 3, 5], [1, 6, 2], [9, 7, 9], [3, 2, 1], [2, 1, 6]]))
 
@@ -47,7 +48,7 @@ def inf_all_the_numbers_bigger_than_T(T: int, p_vals: List[List[int]]):
     for m in range(p_rows):
         for j in range(p_cols):
             if p_vals[m][j] > T:
-                new_p_vals[m][j] = 99999999999999
+                new_p_vals[m][j] = 1000000000000000 # sys.maxsize // 10
     return new_p_vals
 #print(inf_all_the_numbers_bigger_than_T(4, [[4, 1, 9, 3, 2,], [3, 6, 7, 2, 1], [5, 2, 9, 1, 6]]))
 
@@ -91,7 +92,7 @@ def X_fractional_sol(p_vals: List[List[int]]):
 #print(X_fractional_sol([[4, 1, 9, 3, 2,], [3, 6, 7, 2, 1], [5, 2, 9, 1, 6]]))
 
 
-def vec_to_mat(x ,rows, cols):
+def vec_to_mat(x, rows, cols):
     
     new_x = [[0 for _ in range(cols)] for _ in range(rows)]
     for m in range(rows):
@@ -99,12 +100,11 @@ def vec_to_mat(x ,rows, cols):
             new_x[m][j] = round(x[(m * cols) + j],5)
     return new_x
 
-      
 
 class ApproxSolver:
     def __init__(self, p_vals: List[List[int]]):
         self.p_vals = copy.deepcopy(p_vals)
-        
+
     def job_and_machine_solution(self) -> Dict[str, str]:
         #the output is {job: machine}
         res, fractional_sol_as_vec = X_fractional_sol(self.p_vals)
